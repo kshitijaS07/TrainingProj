@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login | Expense Tracker</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    background:#f4f6f9;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.container{
+    width:1000px;
+    background:white;
+    border-radius:20px;
+    overflow:hidden;
+    display:flex;
+    box-shadow:0 10px 30px rgba(0,0,0,0.1);
+}
+
+.left{
+    width:50%;
+    padding:60px;
+}
+
+.logo{
+    font-size:32px;
+    font-weight:700;
+    color:#8b5e34;
+    margin-bottom:30px;
+}
+
+h1{
+    font-size:38px;
+    color:#222;
+    margin-bottom:10px;
+}
+
+.subtitle{
+    color:#666;
+    margin-bottom:35px;
+}
+
+.input-box{
+    margin-bottom:20px;
+}
+
+input{
+    width:100%;
+    padding:15px;
+    border:1px solid #ddd;
+    border-radius:10px;
+    font-size:16px;
+    outline:none;
+}
+
+input:focus{
+    border-color:#8b5e34;
+}
+
+button{
+    width:100%;
+    background:#8b5e34;
+    color:white;
+    border:none;
+    padding:15px;
+    border-radius:10px;
+    font-size:16px;
+    font-weight:600;
+    cursor:pointer;
+    transition:.3s;
+}
+
+button:hover{
+    background:#6f4825;
+}
+
+.signup-link{
+    text-align:center;
+    margin-top:20px;
+    color:#666;
+}
+
+.signup-link a{
+    color:#0d6efd;
+    text-decoration:none;
+    font-weight:600;
+}
+
+.error{
+    background:#ffe5e5;
+    color:red;
+    padding:10px;
+    border-radius:8px;
+    margin-bottom:15px;
+    text-align:center;
+}
+
+.right{
+    width:50%;
+    background:linear-gradient(135deg,#8b5e34,#c48a55);
+    color:white;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    padding:50px;
+}
+
+.right h2{
+    font-size:36px;
+    margin-bottom:15px;
+}
+
+.right p{
+    text-align:center;
+    line-height:1.8;
+    font-size:17px;
+}
+
+.icon{
+    font-size:100px;
+    margin-bottom:25px;
+}
+
+@media(max-width:900px){
+
+.container{
+    width:95%;
+    flex-direction:column;
+}
+
+.left,
+.right{
+    width:100%;
+}
+
+}
+
+</style>
+
+</head>
+<body>
+
+<div class="container">
+
+    <!-- LEFT SIDE -->
+    <div class="left">
+
+        <div class="logo">
+            💰 Expense Tracker
+        </div>
+
+        <h1>Sign In</h1>
+
+        <p class="subtitle">
+            Login to manage your expenses and budgets
+        </p>
+
+        {% if error %}
+        <div class="error">
+            {{ error }}
+        </div>
+        {% endif %}
+
+        <form action="/login" method="POST">
+
+            <div class="input-box">
+                <input
+                    type="email"
+                    name="email"
+                    placeholder="Enter Email Address"
+                    required
+                >
+            </div>
+
+            <div class="input-box">
+                <input
+                    type="password"
+                    name="password"
+                    placeholder="Enter Password"
+                    required
+                >
+            </div>
+
+            <button type="submit">
+                Login
+            </button>
+
+        </form>
+
+        <div class="signup-link">
+            Don't have an account?
+            <a href="/signup">
+                Sign Up
+            </a>
+        </div>
+
+    </div>
+
+    <!-- RIGHT SIDE -->
+    <div class="right">
+
+        <div class="icon">
+            📊
+        </div>
+
+        <h2>Expense Tracker</h2>
+
+        <p>
+            Track expenses, manage budgets,
+            monitor spending habits and
+            stay financially organized
+            with a smart dashboard.
+        </p>
+
+    </div>
+
+</div>
+
+</body>
+</html>

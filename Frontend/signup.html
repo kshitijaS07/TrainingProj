@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sign Up | Expense Tracker</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins',sans-serif;
+}
+
+body{
+    background:#f4f6f9;
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:20px;
+}
+
+.container{
+    width:1000px;
+    background:white;
+    border-radius:20px;
+    overflow:hidden;
+    display:flex;
+    box-shadow:0 10px 30px rgba(0,0,0,0.1);
+}
+
+.left{
+    width:50%;
+    background:linear-gradient(135deg,#8b5e34,#c48a55);
+    color:white;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    padding:50px;
+}
+
+.left h2{
+    font-size:36px;
+    margin-bottom:15px;
+}
+
+.left p{
+    text-align:center;
+    line-height:1.8;
+    font-size:17px;
+}
+
+.icon{
+    font-size:100px;
+    margin-bottom:25px;
+}
+
+.right{
+    width:50%;
+    padding:50px;
+}
+
+.logo{
+    font-size:30px;
+    font-weight:700;
+    color:#8b5e34;
+    margin-bottom:25px;
+}
+
+h1{
+    color:#222;
+    margin-bottom:10px;
+}
+
+.subtitle{
+    color:#666;
+    margin-bottom:30px;
+}
+
+.input-box{
+    margin-bottom:18px;
+}
+
+input{
+    width:100%;
+    padding:15px;
+    border:1px solid #ddd;
+    border-radius:10px;
+    font-size:15px;
+    outline:none;
+}
+
+input:focus{
+    border-color:#8b5e34;
+}
+
+button{
+    width:100%;
+    border:none;
+    background:#8b5e34;
+    color:white;
+    padding:15px;
+    border-radius:10px;
+    font-size:16px;
+    font-weight:600;
+    cursor:pointer;
+    transition:.3s;
+}
+
+button:hover{
+    background:#6f4825;
+}
+
+.error{
+    background:#ffe5e5;
+    color:red;
+    padding:10px;
+    border-radius:8px;
+    margin-bottom:15px;
+    text-align:center;
+}
+
+.login-link{
+    margin-top:20px;
+    text-align:center;
+    color:#666;
+}
+
+.login-link a{
+    color:#0d6efd;
+    text-decoration:none;
+    font-weight:600;
+}
+
+@media(max-width:900px){
+
+.container{
+    flex-direction:column;
+    width:95%;
+}
+
+.left,
+.right{
+    width:100%;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+    <body>
+
+<div class="container">
+
+    <!-- LEFT SIDE -->
+
+    <div class="left">
+
+        <div class="icon">
+            💰
+        </div>
+
+        <h2>Expense Tracker</h2>
+
+        <p>
+            Create your account and start tracking
+            your income, expenses, savings and
+            monthly financial goals with ease.
+        </p>
+
+    </div>
+
+    <!-- RIGHT SIDE -->
+
+    <div class="right">
+
+        <div class="logo">
+            Expense Tracker
+        </div>
+
+        <h1>Create Account</h1>
+
+        <p class="subtitle">
+            Register to access your dashboard
+        </p>
+
+        {% if error %}
+        <div class="error">
+            {{ error }}
+        </div>
+        {% endif %}
+
+        <form action="/signup" method="POST">
+
+            <div class="input-box">
+                <input
+                    type="text"
+                    name="name"
+                    placeholder="Full Name"
+                    required
+                >
+            </div>
+
+            <div class="input-box">
+                <input
+                    type="email"
+                    name="email"
+                    placeholder="Email Address"
+                    required
+                >
+            </div>
+
+            <div class="input-box">
+                <input
+                    type="password"
+                    name="password"
+                    placeholder="Password"
+                    required
+                >
+            </div>
+
+            <button type="submit">
+                Create Account
+            </button>
+
+        </form>
+
+        <div class="login-link">
+            Already have an account?
+            <a href="/login">
+                Login
+            </a>
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>
