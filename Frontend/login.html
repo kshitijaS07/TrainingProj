@@ -1,220 +1,275 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Login | Expense Tracker Pro</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 <style>
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Poppins',sans-serif;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
 }
-
-body{
-min-height:100vh;
-display:flex;
-justify-content:center;
-align-items:center;
-background:linear-gradient(135deg,#0f172a,#1e3a8a,#0ea5e9);
-padding:20px;
+html,
+body {
+  height: 100%;
 }
-
-.container{
-width:1000px;
-display:flex;
-overflow:hidden;
-border-radius:30px;
-background:rgba(255,255,255,.1);
-backdrop-filter:blur(20px);
-box-shadow:0 20px 50px rgba(0,0,0,.25);
+body {
+  background: #eef2ff;
+  color: #0f172a;
 }
-
-.left{
-width:50%;
-padding:60px;
-color:white;
-display:flex;
-flex-direction:column;
-justify-content:center;
+.page-wrapper {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 24px;
 }
-
-.logo{
-font-size:32px;
-font-weight:700;
-margin-bottom:25px;
+.card {
+  width: min(1120px, 100%);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  border-radius: 36px;
+  overflow: hidden;
+  box-shadow: 0 40px 80px rgba(15, 23, 42, 0.12);
+  background: white;
 }
-
-.left h1{
-font-size:48px;
-margin-bottom:15px;
+.sidebar {
+  background: linear-gradient(180deg, #eef2ff 0%, #f8fafc 100%);
+  padding: 64px 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 24px;
 }
-
-.left p{
-line-height:1.8;
-opacity:.9;
+.sidebar .eyebrow {
+  color: #2563eb;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
 }
-
-.right{
-width:50%;
-background:white;
-padding:60px;
+.sidebar h1 {
+  font-size: 48px;
+  line-height: 1.05;
+  color: #0f172a;
 }
-
-.form-title{
-font-size:34px;
-font-weight:700;
-margin-bottom:10px;
-color:#0f172a;
+.sidebar p {
+  font-size: 16px;
+  line-height: 1.85;
+  color: #475569;
+  max-width: 420px;
 }
-
-.subtitle{
-color:#64748b;
-margin-bottom:30px;
+.sidebar .features {
+  display: grid;
+  gap: 14px;
+  margin-top: 18px;
 }
-
-input{
-width:100%;
-padding:15px;
-margin-bottom:18px;
-border:1px solid #cbd5e1;
-border-radius:12px;
-font-size:15px;
-outline:none;
+.sidebar .feature-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: #475569;
+  font-size: 15px;
 }
-
-input:focus{
-border-color:#0ea5e9;
+.sidebar .feature-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: #2563eb;
 }
-
-button{
-width:100%;
-padding:15px;
-border:none;
-background:linear-gradient(135deg,#0ea5e9,#2563eb);
-color:white;
-border-radius:12px;
-font-size:16px;
-font-weight:600;
-cursor:pointer;
+.form-panel {
+  padding: 52px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
-
-button:hover{
-opacity:.9;
+.form-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
 }
-
-.error{
-background:#fee2e2;
-color:#dc2626;
-padding:12px;
-border-radius:10px;
-margin-bottom:15px;
-text-align:center;
+.form-header .nav-buttons {
+  display: flex;
+  gap: 10px;
 }
-
-.link{
-margin-top:20px;
-text-align:center;
+.form-header .nav-buttons a {
+  padding: 10px 18px;
+  border-radius: 999px;
+  text-decoration: none;
+  font-weight: 700;
+  font-size: 14px;
+  transition: transform 0.2s ease, background 0.2s ease;
 }
-
-.link a{
-text-decoration:none;
-color:#2563eb;
-font-weight:600;
+.form-header .nav-buttons .active {
+  background: #2563eb;
+  color: white;
 }
-
-@media(max-width:900px){
-
-.container{
-flex-direction:column;
+.form-header .nav-buttons .secondary {
+  background: #f1f5f9;
+  color: #0f172a;
 }
-
-.left,
-.right{
-width:100%;
+.form-header .nav-buttons a:hover {
+  transform: translateY(-1px);
 }
-
-.left{
-text-align:center;
-padding:40px;
+.form-title {
+  font-size: 36px;
+  font-weight: 700;
+  margin-bottom: 10px;
 }
-
+.form-subtitle {
+  color: #64748b;
+  margin-bottom: 32px;
 }
-
+.form-group {
+  display: grid;
+  gap: 18px;
+}
+.input-field {
+  width: 100%;
+  padding: 16px 18px;
+  border: 1px solid #cbd5e1;
+  border-radius: 16px;
+  font-size: 15px;
+  color: #0f172a;
+}
+.input-field:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+.primary-btn {
+  width: 100%;
+  padding: 16px 18px;
+  border: none;
+  border-radius: 16px;
+  background: #2563eb;
+  color: white;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+}
+.primary-btn:hover {
+  opacity: 0.95;
+}
+.secondary-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  margin-top: 18px;
+  margin-bottom: 24px;
+}
+.secondary-row a {
+  color: #2563eb;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+}
+.social-login {
+  display: grid;
+  gap: 14px;
+}
+.social-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 14px 16px;
+  border-radius: 16px;
+  border: 1px solid #e2e8f0;
+  text-decoration: none;
+  font-weight: 600;
+  color: #0f172a;
+}
+.social-btn.google {
+  background: white;
+}
+.social-btn.twitter {
+  background: white;
+}
+.form-footer {
+  margin-top: 28px;
+  text-align: center;
+  color: #64748b;
+}
+.form-footer a {
+  color: #2563eb;
+  font-weight: 700;
+  text-decoration: none;
+}
+.error {
+  background: #fee2e2;
+  color: #b91c1c;
+  padding: 14px 18px;
+  border-radius: 16px;
+  margin-bottom: 20px;
+  border: 1px solid #fecaca;
+}
+@media (max-width: 960px) {
+  .card {
+    grid-template-columns: 1fr;
+  }
+  .sidebar,
+  .form-panel {
+    padding: 36px 28px;
+  }
+}
+@media (max-width: 640px) {
+  .form-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+}
 </style>
 </head>
-
 <body>
-
-<div class="container">
-
-<div class="left">
-
-<div class="logo">
-💰 Expense Tracker Pro
+<div class="page-wrapper">
+  <div class="card">
+    <div class="sidebar">
+      <div class="eyebrow">Your Money.</div>
+      <h1>Smarter, Safer</h1>
+      <p>Manage your finances with confidence. Track, transfer and grow your money all in one place.</p>
+      <div class="features">
+        <div class="feature-item"><span class="feature-dot"></span>Bank Level Security</div>
+        <div class="feature-item"><span class="feature-dot"></span>Instant Transfers</div>
+        <div class="feature-item"><span class="feature-dot"></span>Smart Insights</div>
+      </div>
+    </div>
+    <div class="form-panel">
+      <div class="form-header">
+        <div>
+          <div class="form-title">Welcome Back</div>
+          <div class="form-subtitle">Login to continue managing your finances</div>
+        </div>
+        <div class="nav-buttons">
+          <a href="/signup" class="secondary">Sign Up</a>
+          <a href="/login" class="active">Login</a>
+        </div>
+      </div>
+      {% if error %}
+      <div class="error">{{ error }}</div>
+      {% endif %}
+      <form action="/login" method="POST" class="form-group">
+        <input class="input-field" type="email" name="email" placeholder="Email Address / Phone Number" required />
+        <input class="input-field" type="password" name="password" placeholder="Password" required />
+        <div class="secondary-row">
+          <span></span>
+          <a href="#">Forgot password?</a>
+        </div>
+        <button class="primary-btn" type="submit">Login</button>
+      </form>
+      <div class="social-login">
+        <a class="social-btn google" href="#">Login with Google</a>
+      </div>
+      <div class="form-footer">
+        Don’t have an account? <a href="/signup">Create one</a>
+      </div>
+    </div>
+  </div>
 </div>
-
-<h1>Manage Money Smarter</h1>
-
-<p>
-Track your income, expenses and savings with a modern financial dashboard designed to help you stay in control of every rupee.
-</p>
-
-</div>
-
-<div class="right">
-
-<div class="form-title">
-Welcome Back
-</div>
-
-<div class="subtitle">
-Sign in to continue
-</div>
-
-{% if error %}
-<div class="error">
-{{ error }}
-</div>
-{% endif %}
-
-<form action="/login" method="POST">
-
-<input
-type="email"
-name="email"
-placeholder="Email Address"
-required
->
-
-<input
-type="password"
-name="password"
-placeholder="Password"
-required
->
-
-<button type="submit">
-Login
-</button>
-
-</form>
-
-<div class="link">
-Don't have an account?
-<a href="/signup">Create Account</a>
-</div>
-
-</div>
-
-</div>
-
 </body>
 </html>
-

@@ -404,6 +404,9 @@ def home_page(
     )
 
     balance = income - expense
+    total = income + expense
+    income_ratio = int((income / total) * 100) if total else 0
+    expense_ratio = int((expense / total) * 100) if total else 0
 
     return templates.TemplateResponse(
         request=request,
@@ -413,7 +416,9 @@ def home_page(
             "expenses": expenses,
             "income": income,
             "expense": expense,
-            "balance": balance
+            "balance": balance,
+            "income_ratio": income_ratio,
+            "expense_ratio": expense_ratio
         }
     )
 
@@ -428,28 +433,11 @@ def home_page(
 )
 def create_page(
     request: Request,
-    current_user:
-    User = Depends(get_current_user)
-):
-
-    if not current_user:
-
-        return RedirectResponse(
-            url="/login",
-            status_code=303
-        )
-
-    @app.get(
-    "/create",
-    response_class=HTMLResponse
-)
-    def create_page(
-    request: Request,
     current_user: User = Depends(get_current_user)
 ):
 
-        if not current_user:
-            return RedirectResponse(
+    if not current_user:
+        return RedirectResponse(
             url="/login",
             status_code=303
         )

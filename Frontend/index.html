@@ -1,412 +1,568 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>Expense Tracker Pro</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>FinanceFlow Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
 <style>
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Poppins',sans-serif;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
 }
-
-body{
-background:#f4f7fc;
-color:#1e293b;
+html, body {
+  height: 100%;
 }
-
-.container{
-display:flex;
-min-height:100vh;
+body {
+  background: linear-gradient(180deg, #eff6ff 0%, #f8fafc 100%);
+  color: #0f172a;
+  overflow: hidden;
 }
-
-/* SIDEBAR */
-
-.sidebar{
-width:280px;
-background:#0f172a;
-padding:30px 20px;
-position:fixed;
-height:100vh;
+.dashboard {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  min-height: 100vh;
 }
-
-.logo{
-font-size:26px;
-font-weight:700;
-color:white;
-margin-bottom:50px;
-text-align:center;
+.sidebar {
+  background: #ffffff;
+  box-shadow: 0 28px 80px rgba(15, 23, 42, 0.08);
+  padding: 32px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
 }
-
-.logo span{
-color:#38bdf8;
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
 }
-
-.menu a{
-display:block;
-padding:15px;
-margin-bottom:12px;
-border-radius:12px;
-text-decoration:none;
-color:#cbd5e1;
-font-weight:500;
-transition:.3s;
+.brand-icon {
+  width: 46px;
+  height: 46px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #2563eb, #7dd3fc);
+  display: grid;
+  place-items: center;
+  color: white;
+  font-weight: 800;
 }
-
-.menu a:hover{
-background:#1e293b;
-color:#38bdf8;
-transform:translateX(5px);
+.brand-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #0f172a;
 }
-
-/* MAIN */
-
-.main{
-margin-left:280px;
-width:calc(100% - 280px);
-padding:35px;
+.brand-subtitle {
+  font-size: 13px;
+  color: #64748b;
 }
-
-/* HERO */
-
-.hero{
-background:linear-gradient(135deg,#0ea5e9,#2563eb);
-padding:35px;
-border-radius:24px;
-color:white;
-margin-bottom:30px;
-display:flex;
-justify-content:space-between;
-align-items:center;
-flex-wrap:wrap;
-box-shadow:0 10px 25px rgba(37,99,235,.25);
+.nav-links {
+  display: grid;
+  gap: 10px;
 }
-
-.hero h1{
-font-size:34px;
-font-weight:700;
+.nav-links a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  border-radius: 18px;
+  text-decoration: none;
+  color: #334155;
+  font-weight: 500;
+  transition: background 0.2s ease, color 0.2s ease;
 }
-
-.hero p{
-margin-top:10px;
-opacity:.95;
+.nav-links a.active,
+.nav-links a:hover {
+  background: #eff6ff;
+  color: #1d4ed8;
 }
-
-.add-btn{
-background:white;
-color:#2563eb;
-padding:14px 24px;
-text-decoration:none;
-border-radius:12px;
-font-weight:600;
-transition:.3s;
+.nav-links .icon {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  background: #e0f2fe;
 }
-
-.add-btn:hover{
-transform:translateY(-3px);
+.profile-card {
+  background: #f8fafc;
+  border-radius: 28px;
+  padding: 18px;
+  box-shadow: 0 24px 50px rgba(15, 23, 42, 0.08);
 }
-
-/* CARDS */
-
-.cards{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-gap:20px;
-margin-bottom:30px;
+.profile-card .avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #2563eb, #7dd3fc);
+  display: grid;
+  place-items: center;
+  color: white;
+  font-weight: 700;
+  margin-bottom: 14px;
 }
-
-.card{
-background:white;
-padding:25px;
-border-radius:20px;
-box-shadow:0 10px 20px rgba(0,0,0,.05);
-transition:.3s;
+.profile-card strong {
+  display: block;
+  font-size: 15px;
+  color: #0f172a;
+  margin-bottom: 4px;
 }
-
-.card:hover{
-transform:translateY(-5px);
+.profile-card span {
+  font-size: 13px;
+  color: #64748b;
 }
-
-.card-title{
-font-size:14px;
-color:#64748b;
-margin-bottom:12px;
+.main-content {
+  padding: 32px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
-
-.card-value{
-font-size:30px;
-font-weight:700;
+.content-scroll {
+  overflow-y: auto;
+  max-height: calc(100vh - 190px);
+  padding-right: 10px;
 }
-
-.income{
-color:#16a34a;
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  margin-bottom: 24px;
 }
-
-.expense{
-color:#dc2626;
+.welcome h1 {
+  font-size: 30px;
+  font-weight: 700;
+  color: #0f172a;
 }
-
-.balance{
-color:#2563eb;
+.welcome p {
+  margin-top: 8px;
+  color: #64748b;
 }
-
-/* TABLE */
-
-.table-container{
-background:white;
-border-radius:24px;
-overflow:hidden;
-box-shadow:0 10px 20px rgba(0,0,0,.05);
+.search-box {
+  width: min(420px, 100%);
 }
-
-.table-header{
-padding:25px;
-font-size:22px;
-font-weight:600;
-border-bottom:1px solid #e2e8f0;
+.search-box input {
+  width: 100%;
+  padding: 14px 18px;
+  border-radius: 18px;
+  border: 1px solid #cbd5e1;
+  outline: none;
+  font-size: 14px;
+  color: #0f172a;
+  background: white;
 }
-
-table{
-width:100%;
-border-collapse:collapse;
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  margin-bottom: 24px;
 }
-
-th{
-background:#0f172a;
-color:white;
-padding:18px;
-font-weight:600;
+.stat-card {
+  background: #1f2937;
+  color: white;
+  border-radius: 24px;
+  padding: 22px;
+  box-shadow: 0 24px 60px rgba(15, 23, 42, 0.12);
 }
-
-td{
-padding:16px;
-text-align:center;
-border-bottom:1px solid #e2e8f0;
+.stat-card .label {
+  font-size: 13px;
+  color: #cbd5e1;
+  margin-bottom: 12px;
 }
-
-tr:hover{
-background:#f8fafc;
+.stat-card .value {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 10px;
 }
-
-.edit{
-padding:8px 14px;
-background:#16a34a;
-color:white;
-border-radius:8px;
-text-decoration:none;
-font-size:14px;
+.stat-card .change {
+  font-size: 13px;
+  color: #cbd5e1;
 }
-
-.delete{
-padding:8px 14px;
-background:#dc2626;
-color:white;
-border-radius:8px;
-text-decoration:none;
-font-size:14px;
-margin-left:8px;
+.stat-card.income .change {
+  color: #22c55e;
 }
-
-.no-data{
-padding:60px;
-text-align:center;
+.stat-card.expense .change {
+  color: #fb7185;
 }
-
-.no-data h2{
-margin-bottom:20px;
+.overview-row {
+  display: grid;
+  grid-template-columns: 1.55fr 1fr;
+  gap: 18px;
+  margin-bottom: 24px;
 }
-
-.empty-btn{
-display:inline-block;
-padding:14px 22px;
-background:#2563eb;
-color:white;
-text-decoration:none;
-border-radius:12px;
+.panel {
+  background: white;
+  border-radius: 32px;
+  padding: 24px;
+  box-shadow: 0 30px 60px rgba(15, 23, 42, 0.08);
+  display: flex;
+  flex-direction: column;
 }
-
-/* MOBILE */
-
-@media(max-width:900px){
-
-.sidebar{
-display:none;
+.panel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  gap: 12px;
 }
-
-.main{
-margin-left:0;
-width:100%;
-padding:20px;
+.panel-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #0f172a;
 }
-
-.hero{
-flex-direction:column;
-gap:20px;
-text-align:center;
+.panel-badge {
+  background: #eff6ff;
+  color: #2563eb;
+  padding: 8px 12px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
 }
-
+.chart-box {
+  flex: 1;
+  min-height: 0;
 }
-
+.card-summary {
+  background: linear-gradient(180deg, #c7d2fe 0%, #93c5fd 100%);
+  border-radius: 32px;
+  padding: 24px;
+  color: #0f172a;
+  min-height: 280px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.card-summary .tag {
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  opacity: 0.85;
+}
+.card-summary .amount {
+  font-size: 32px;
+  font-weight: 700;
+  margin: 18px 0 8px;
+}
+.card-summary .card-no {
+  font-size: 13px;
+  color: rgba(15, 23, 42, 0.72);
+}
+.card-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 18px;
+}
+.card-actions button {
+  border: none;
+  border-radius: 16px;
+  padding: 12px 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.card-actions .primary {
+  background: #1d4ed8;
+  color: white;
+}
+.card-actions .secondary {
+  background: rgba(15, 23, 42, 0.08);
+  color: #0f172a;
+}
+.activity-panel {
+  background: #0f172a;
+  color: white;
+}
+.activity-stats {
+  margin-top: 18px;
+  display: grid;
+  gap: 12px;
+}
+.activity-legend {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 18px;
+}
+.legend-chip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+}
+.legend-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+}
+.transaction-panel {
+  background: white;
+  border-radius: 32px;
+  padding: 24px;
+  box-shadow: 0 30px 60px rgba(15, 23, 42, 0.08);
+  overflow-y: auto;
+  max-height: 520px;
+}
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.table thead th {
+  text-align: left;
+  font-size: 12px;
+  color: #64748b;
+  padding: 14px 12px;
+}
+.table tbody tr {
+  border-bottom: 1px solid #e2e8f0;
+}
+.table tbody td {
+  padding: 14px 12px;
+  font-size: 13px;
+  color: #0f172a;
+}
+.badge-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 10px;
+  border-radius: 999px;
+  background: #eff6ff;
+  color: #2563eb;
+  font-size: 11px;
+  font-weight: 600;
+}
+.no-data {
+  padding: 40px;
+  text-align: center;
+}
+.no-data h2 {
+  margin-bottom: 20px;
+  color: #0f172a;
+}
+.no-data .empty-btn {
+  display: inline-block;
+  padding: 12px 20px;
+  background: #2563eb;
+  border-radius: 14px;
+  color: #fff;
+  text-decoration: none;
+}
+@media (max-width: 1120px) {
+  .dashboard {
+    grid-template-columns: 1fr;
+  }
+  .main-content {
+    padding: 24px;
+  }
+  .stats-row,
+  .overview-row {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 720px) {
+  .sidebar {
+    display: none;
+  }
+  .main-content {
+    padding: 18px;
+  }
+  .topbar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
 </style>
 </head>
-
 <body>
-
-<div class="container">
-
-<!-- SIDEBAR -->
-
-<div class="sidebar">
-
-<div class="logo">
-💰 Expense<span>Pro</span>
+<div class="dashboard">
+  <aside class="sidebar">
+    <div class="brand">
+      <div class="brand-icon">E</div>
+      <div>
+        <div class="brand-title">Expense Tracker Pro</div>
+        <div class="brand-subtitle">Finance Dashboard</div>
+      </div>
+    </div>
+    <nav class="nav-links">
+      <a href="/" class="active"><span class="icon">🏠</span> Dashboard</a>
+      <a href="/create"><span class="icon">➕</span> Add Expense</a>
+      <a href="/logout"><span class="icon">🚪</span> Logout</a>
+    </nav>
+    <div class="profile-card">
+      <div class="avatar">{{ current_user.name[0] if current_user else 'G' }}</div>
+      <strong>{{ current_user.name if current_user else 'Guest User' }}</strong>
+      <span>General Manager</span>
+    </div>
+  </aside>
+  <main class="main-content">
+    <div class="topbar">
+      <div class="welcome">
+        <h1>Welcome Back{{ ' ' + current_user.name if current_user else '' }} 👋</h1>
+        <p>Stay Updated With What’s Happening</p>
+      </div>
+      <div class="search-box">
+        <input type="search" placeholder="Search for anything" />
+      </div>
+    </div>
+    <div class="content-scroll">
+      <div class="stats-row">
+        <div class="stat-card income">
+          <div class="label">Total Credit</div>
+          <div class="value">₹ {{ income }}</div>
+          <div class="change">+{{ income_ratio | default(0) }}% since last month</div>
+        </div>
+        <div class="stat-card expense">
+          <div class="label">Total Debit</div>
+          <div class="value">₹ {{ expense }}</div>
+          <div class="change">-{{ expense_ratio | default(0) }}% since last month</div>
+        </div>
+        <div class="stat-card balance">
+          <div class="label">Current Balance</div>
+          <div class="value">₹ {{ balance }}</div>
+          <div class="change">Available funds</div>
+        </div>
+      </div>
+      <div class="overview-row">
+        <section class="panel">
+          <div class="panel-header">
+            <div class="panel-title">Overview</div>
+            <span class="panel-badge">Income vs Outcome</span>
+          </div>
+          <div class="chart-box">
+            <canvas id="overviewChart"></canvas>
+          </div>
+        </section>
+        <section class="panel card-summary">
+          <div>
+            <div class="tag">My Card</div>
+            <div class="amount">₹ {{ balance }}</div>
+            <div class="card-no">Card Balance</div>
+          </div>
+          <div>
+            <div class="card-no">**** **** **** 1289</div>
+            <div style="display:flex; justify-content:space-between; margin-top: 18px; font-size: 13px; color: rgba(15,23,42,0.72);">
+              <span>Mastercard</span>
+              <span>09/25</span>
+            </div>
+          </div>
+          <div class="card-actions">
+            <button class="primary">Manage Cards</button>
+            <button class="secondary">Transfer</button>
+          </div>
+          <div class="panel-header" style="margin-top: 24px; margin-bottom: 14px;">
+            <div class="panel-title">Activity</div>
+            <span class="panel-badge">Month</span>
+          </div>
+          <div style="height: 170px;">
+            <canvas id="activityChart"></canvas>
+          </div>
+          <div class="activity-legend">
+            <span class="legend-chip"><span class="legend-dot" style="background:#2563eb;"></span>Regular 55%</span>
+            <span class="legend-chip"><span class="legend-dot" style="background:#f97316;"></span>Shopping 20%</span>
+            <span class="legend-chip"><span class="legend-dot" style="background:#64748b;"></span>Other 25%</span>
+          </div>
+        </section>
+      </div>
+      <section class="panel">
+        <div class="panel-header">
+          <div class="panel-title">Quick Add</div>
+          <span class="panel-badge">Create Entry</span>
+        </div>
+        <p style="color:#64748b; line-height:1.8; margin-bottom:20px;">Quickly add a new expense or income entry so your dashboard stays accurate and updated.</p>
+        <div style="display:flex; flex-wrap:wrap; gap:12px;">
+          <a href="/create" style="padding:14px 20px; border-radius:18px; background:#2563eb; color:#fff; text-decoration:none; font-weight:600;">Add Expense</a>
+          <a href="/create" style="padding:14px 20px; border-radius:18px; border:1px solid #cbd5e1; color:#0f172a; text-decoration:none; font-weight:600;">Add Income</a>
+        </div>
+      </section>
+      <section class="transaction-panel">
+        <div class="panel-header">
+          <div class="panel-title">Transaction</div>
+          <span class="panel-badge">10 Apr - 20 May</span>
+        </div>
+        {% if expenses and expenses|length > 0 %}
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Date</th>
+              <th>Amount</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for e in expenses[:5] %}
+            <tr>
+              <td>{{ e.title }}</td>
+              <td>{{ e.date }}</td>
+              <td>₹ {{ e.amount }}</td>
+              <td><span class="badge-pill">{{ 'Deposited' if e.expense_type == 'Income' else 'Expense' }}</span></td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+        {% else %}
+        <div class="no-data">
+          <h2>No Expenses Added Yet</h2>
+          <a href="/create" class="empty-btn">Add Your First Expense</a>
+        </div>
+        {% endif %}
+      </section>
+    </div>
+  </main>
 </div>
-
-<div class="menu">
-<a href="/">🏠 Dashboard</a>
-<a href="/create">➕ Add Expense</a>
-<a href="/logout">🚪 Logout</a>
-</div>
-
-</div>
-
-<!-- MAIN -->
-
-<div class="main">
-
-<!-- HERO -->
-
-<div class="hero">
-
-<div>
-
-<h1>
-Welcome
-{% if current_user %}
-{{ current_user.name }}
-{% else %}
-User
-{% endif %}
-👋
-</h1>
-
-<p>
-Track expenses, monitor income and stay financially organized.
-</p>
-
-</div>
-
-<a href="/create" class="add-btn">
-+ Add Expense
-</a>
-
-</div>
-
-<!-- CARDS -->
-
-<div class="cards">
-
-<div class="card">
-<div class="card-title">💵 Total Income</div>
-<div class="card-value income">
-₹ {{ income }}
-</div>
-</div>
-
-<div class="card">
-<div class="card-title">📉 Total Expense</div>
-<div class="card-value expense">
-₹ {{ expense }}
-</div>
-</div>
-
-<div class="card">
-<div class="card-title">🏦 Current Balance</div>
-<div class="card-value balance">
-₹ {{ balance }}
-</div>
-</div>
-
-</div>
-
-<!-- TABLE -->
-
-<div class="table-container">
-
-<div class="table-header">
-Recent Transactions
-</div>
-
-{% if expenses and expenses|length > 0 %}
-
-<table>
-
-<tr>
-<th>ID</th>
-<th>Title</th>
-<th>Category</th>
-<th>Amount</th>
-<th>Type</th>
-<th>Date</th>
-<th>Actions</th>
-</tr>
-
-{% for e in expenses %}
-
-<tr>
-
-<td>{{ e.id }}</td>
-<td>{{ e.title }}</td>
-<td>{{ e.category }}</td>
-<td>₹ {{ e.amount }}</td>
-<td>{{ e.expense_type }}</td>
-<td>{{ e.date }}</td>
-
-<td>
-
-<a href="/update/{{ e.id }}" class="edit">
-Edit
-</a>
-
-<a href="/delete/{{ e.id }}" class="delete">
-Delete
-</a>
-
-</td>
-
-</tr>
-
-{% endfor %}
-
-</table>
-
-{% else %}
-
-<div class="no-data">
-
-<h2>No Expenses Added Yet</h2>
-
-<a href="/create" class="empty-btn">
-Add Your First Expense
-</a>
-
-</div>
-
-{% endif %}
-
-</div>
-
-</div>
-
-</div>
-
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+const overviewCtx = document.getElementById('overviewChart').getContext('2d');
+new Chart(overviewCtx, {
+  type: 'bar',
+  data: {
+    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug'],
+    datasets: [
+      {
+        label: 'Income',
+        data: [{{ income|default(0) }}, {{ income|default(0) }}, {{ income|default(0) }}, {{ income|default(0) }}, {{ income|default(0) }}, {{ income|default(0) }}, {{ income|default(0) }}, {{ income|default(0) }}],
+        backgroundColor: '#2563eb',
+        borderRadius: 14,
+        barThickness: 18
+      },
+      {
+        label: 'Outcome',
+        data: [{{ expense|default(0) }}, {{ expense|default(0) }}, {{ expense|default(0) }}, {{ expense|default(0) }}, {{ expense|default(0) }}, {{ expense|default(0) }}, {{ expense|default(0) }}, {{ expense|default(0) }}],
+        backgroundColor: '#60a5fa',
+        borderRadius: 14,
+        barThickness: 18
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: { display: false },
+      tooltip: { enabled: true }
+    },
+    scales: {
+      x: { grid: { display: false }, ticks: { color: '#64748b' } },
+      y: { grid: { color: 'rgba(148,163,184,0.16)' }, ticks: { color: '#64748b' } }
+    }
+  }
+});
+const activityCtx = document.getElementById('activityChart').getContext('2d');
+new Chart(activityCtx, {
+  type: 'doughnut',
+  data: {
+    labels: ['Regular', 'Shopping', 'Other'],
+    datasets: [{
+      data: [55, 20, 25],
+      backgroundColor: ['#2563eb', '#f97316', '#64748b'],
+      hoverOffset: 4
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: { legend: { display: false } },
+    cutout: '72%'
+  }
+});
+</script>
 </body>
 </html>
-
