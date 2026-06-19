@@ -3,151 +3,135 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Sign Up | Expense Tracker</title>
+
+<title>Signup | Expense Tracker Pro</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 <style>
 
 *{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:'Poppins',sans-serif;
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
 }
 
 body{
-    background:#f4f6f9;
-    min-height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    padding:20px;
+min-height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background:linear-gradient(135deg,#0f172a,#1e3a8a,#0ea5e9);
+padding:20px;
 }
 
 .container{
-    width:1000px;
-    background:white;
-    border-radius:20px;
-    overflow:hidden;
-    display:flex;
-    box-shadow:0 10px 30px rgba(0,0,0,0.1);
+width:1000px;
+display:flex;
+overflow:hidden;
+border-radius:30px;
+background:rgba(255,255,255,.1);
+backdrop-filter:blur(20px);
+box-shadow:0 20px 50px rgba(0,0,0,.25);
 }
 
 .left{
-    width:50%;
-    background:linear-gradient(135deg,#8b5e34,#c48a55);
-    color:white;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    flex-direction:column;
-    padding:50px;
+width:50%;
+background:white;
+padding:60px;
 }
 
-.left h2{
-    font-size:36px;
-    margin-bottom:15px;
-}
-
-.left p{
-    text-align:center;
-    line-height:1.8;
-    font-size:17px;
-}
-
-.icon{
-    font-size:100px;
-    margin-bottom:25px;
-}
-
-.right{
-    width:50%;
-    padding:50px;
-}
-
-.logo{
-    font-size:30px;
-    font-weight:700;
-    color:#8b5e34;
-    margin-bottom:25px;
-}
-
-h1{
-    color:#222;
-    margin-bottom:10px;
+.title{
+font-size:34px;
+font-weight:700;
+margin-bottom:10px;
+color:#0f172a;
 }
 
 .subtitle{
-    color:#666;
-    margin-bottom:30px;
-}
-
-.input-box{
-    margin-bottom:18px;
+color:#64748b;
+margin-bottom:30px;
 }
 
 input{
-    width:100%;
-    padding:15px;
-    border:1px solid #ddd;
-    border-radius:10px;
-    font-size:15px;
-    outline:none;
+width:100%;
+padding:15px;
+margin-bottom:18px;
+border:1px solid #cbd5e1;
+border-radius:12px;
+font-size:15px;
+outline:none;
 }
 
 input:focus{
-    border-color:#8b5e34;
+border-color:#0ea5e9;
 }
 
 button{
-    width:100%;
-    border:none;
-    background:#8b5e34;
-    color:white;
-    padding:15px;
-    border-radius:10px;
-    font-size:16px;
-    font-weight:600;
-    cursor:pointer;
-    transition:.3s;
-}
-
-button:hover{
-    background:#6f4825;
+width:100%;
+padding:15px;
+border:none;
+background:linear-gradient(135deg,#0ea5e9,#2563eb);
+color:white;
+border-radius:12px;
+font-size:16px;
+font-weight:600;
+cursor:pointer;
 }
 
 .error{
-    background:#ffe5e5;
-    color:red;
-    padding:10px;
-    border-radius:8px;
-    margin-bottom:15px;
-    text-align:center;
+background:#fee2e2;
+color:#dc2626;
+padding:12px;
+border-radius:10px;
+margin-bottom:15px;
+text-align:center;
 }
 
 .login-link{
-    margin-top:20px;
-    text-align:center;
-    color:#666;
+margin-top:20px;
+text-align:center;
 }
 
 .login-link a{
-    color:#0d6efd;
-    text-decoration:none;
-    font-weight:600;
+text-decoration:none;
+color:#2563eb;
+font-weight:600;
+}
+
+.right{
+width:50%;
+padding:60px;
+display:flex;
+flex-direction:column;
+justify-content:center;
+color:white;
+}
+
+.right h1{
+font-size:45px;
+margin-bottom:15px;
+}
+
+.right p{
+line-height:1.8;
+opacity:.95;
 }
 
 @media(max-width:900px){
 
 .container{
-    flex-direction:column;
-    width:95%;
+flex-direction:column-reverse;
 }
 
 .left,
 .right{
-    width:100%;
+width:100%;
+}
+
+.right{
+text-align:center;
 }
 
 }
@@ -156,91 +140,72 @@ button:hover{
 </head>
 
 <body>
-    <body>
 
 <div class="container">
 
-    <!-- LEFT SIDE -->
+<div class="left">
 
-    <div class="left">
+<div class="title">
+Create Account
+</div>
 
-        <div class="icon">
-            💰
-        </div>
+<div class="subtitle">
+Start tracking your finances today
+</div>
 
-        <h2>Expense Tracker</h2>
+{% if error %}
+<div class="error">
+{{ error }}
+</div>
+{% endif %}
 
-        <p>
-            Create your account and start tracking
-            your income, expenses, savings and
-            monthly financial goals with ease.
-        </p>
+<form action="/signup" method="POST">
 
-    </div>
+<input
+type="text"
+name="name"
+placeholder="Full Name"
+required
+>
 
-    <!-- RIGHT SIDE -->
+<input
+type="email"
+name="email"
+placeholder="Email Address"
+required
+>
 
-    <div class="right">
+<input
+type="password"
+name="password"
+placeholder="Password"
+required
+>
 
-        <div class="logo">
-            Expense Tracker
-        </div>
+<button type="submit">
+Create Account
+</button>
 
-        <h1>Create Account</h1>
+</form>
 
-        <p class="subtitle">
-            Register to access your dashboard
-        </p>
+<div class="login-link">
+Already have an account?
+<a href="/login">Login</a>
+</div>
 
-        {% if error %}
-        <div class="error">
-            {{ error }}
-        </div>
-        {% endif %}
+</div>
 
-        <form action="/signup" method="POST">
+<div class="right">
 
-            <div class="input-box">
-                <input
-                    type="text"
-                    name="name"
-                    placeholder="Full Name"
-                    required
-                >
-            </div>
+<h1>
+💰 Expense Tracker Pro
+</h1>
 
-            <div class="input-box">
-                <input
-                    type="email"
-                    name="email"
-                    placeholder="Email Address"
-                    required
-                >
-            </div>
+<p>
+Monitor spending, manage budgets, analyse financial habits and stay in complete control of your personal finances through one smart platform.
+</p>
 
-            <div class="input-box">
-                <input
-                    type="password"
-                    name="password"
-                    placeholder="Password"
-                    required
-                >
-            </div>
-
-            <button type="submit">
-                Create Account
-            </button>
-
-        </form>
-
-        <div class="login-link">
-            Already have an account?
-            <a href="/login">
-                Login
-            </a>
-        </div>
-
-    </div>
+</div>
 
 </div>
 

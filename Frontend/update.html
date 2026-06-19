@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Update Expense | Expense Tracker Pro</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+min-height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background:linear-gradient(135deg,#0f172a,#1e3a8a,#0ea5e9);
+padding:30px;
+}
+
+.container{
+width:750px;
+background:white;
+padding:40px;
+border-radius:30px;
+box-shadow:0 20px 50px rgba(0,0,0,.25);
+}
+
+.header{
+text-align:center;
+margin-bottom:30px;
+}
+
+.header h1{
+font-size:34px;
+color:#0f172a;
+margin-bottom:10px;
+}
+
+.header p{
+color:#64748b;
+}
+
+.form-group{
+margin-bottom:18px;
+}
+
+input,
+select,
+textarea{
+width:100%;
+padding:15px;
+border:1px solid #cbd5e1;
+border-radius:12px;
+font-size:15px;
+outline:none;
+}
+
+input:focus,
+select:focus,
+textarea:focus{
+border-color:#0ea5e9;
+}
+
+textarea{
+resize:none;
+height:110px;
+}
+
+button{
+width:100%;
+padding:15px;
+border:none;
+border-radius:12px;
+font-size:16px;
+font-weight:600;
+cursor:pointer;
+background:linear-gradient(135deg,#0ea5e9,#2563eb);
+color:white;
+}
+
+button:hover{
+opacity:.9;
+}
+
+.back{
+display:block;
+margin-top:20px;
+text-align:center;
+text-decoration:none;
+font-weight:600;
+color:#2563eb;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="header">
+<h1>✏ Update Expense</h1>
+<p>Edit your financial transaction</p>
+</div>
+
+<form action="/update/{{expense.id}}" method="POST">
+
+<div class="form-group">
+<input
+type="text"
+name="title"
+value="{{expense.title}}"
+required>
+</div>
+
+<div class="form-group">
+<input
+type="number"
+step="0.01"
+name="amount"
+value="{{expense.amount}}"
+required>
+</div>
+
+<div class="form-group">
+<select name="category">
+
+<option selected>
+{{expense.category}}
+</option>
+
+<option>Food</option>
+<option>Shopping</option>
+<option>Travel</option>
+<option>Bills</option>
+<option>Education</option>
+<option>Medical</option>
+<option>Entertainment</option>
+<option>Other</option>
+
+</select>
+</div>
+
+<div class="form-group">
+<select name="expense_type">
+
+<option selected>
+{{expense.expense_type}}
+</option>
+
+<option>Expense</option>
+<option>Income</option>
+
+</select>
+</div>
+
+<div class="form-group">
+<textarea name="note">{{expense.note}}</textarea>
+</div>
+
+<div class="form-group">
+<input
+type="date"
+name="date"
+value="{{expense.date}}"
+required>
+</div>
+
+<button type="submit">
+Update Expense
+</button>
+
+</form>
+
+<a href="/" class="back">
+← Back To Dashboard
+</a>
+
+</div>
+
+</body>
+</html>

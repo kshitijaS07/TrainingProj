@@ -439,7 +439,10 @@ def create_page(
             status_code=303
         )
 
-    @app.get("/create", response_class=HTMLResponse)
+    @app.get(
+    "/create",
+    response_class=HTMLResponse
+)
     def create_page(
     request: Request,
     current_user: User = Depends(get_current_user)

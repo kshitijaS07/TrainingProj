@@ -4,225 +4,301 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Expense Tracker Dashboard</title>
+<title>Expense Tracker Pro</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
 
 *{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:'Poppins',sans-serif;
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
 }
 
 body{
-    background:#f4f6f9;
+background:#f4f7fc;
+color:#1e293b;
 }
 
 .container{
-    display:flex;
-    min-height:100vh;
+display:flex;
+min-height:100vh;
 }
 
-/* Sidebar */
+/* SIDEBAR */
 
 .sidebar{
-    width:260px;
-    background:white;
-    box-shadow:0 0 15px rgba(0,0,0,.08);
-    padding:25px;
+width:280px;
+background:#0f172a;
+padding:30px 20px;
+position:fixed;
+height:100vh;
 }
 
 .logo{
-    font-size:28px;
-    font-weight:700;
-    color:#8b5e34;
-    margin-bottom:40px;
+font-size:26px;
+font-weight:700;
+color:white;
+margin-bottom:50px;
+text-align:center;
+}
+
+.logo span{
+color:#38bdf8;
 }
 
 .menu a{
-    display:block;
-    text-decoration:none;
-    color:#444;
-    padding:14px;
-    margin-bottom:10px;
-    border-radius:10px;
-    transition:.3s;
-    font-weight:500;
+display:block;
+padding:15px;
+margin-bottom:12px;
+border-radius:12px;
+text-decoration:none;
+color:#cbd5e1;
+font-weight:500;
+transition:.3s;
 }
 
 .menu a:hover{
-    background:#8b5e34;
-    color:white;
+background:#1e293b;
+color:#38bdf8;
+transform:translateX(5px);
 }
 
-.logout{
-    margin-top:40px;
-}
-
-/* Main Content */
+/* MAIN */
 
 .main{
-    flex:1;
-    padding:30px;
+margin-left:280px;
+width:calc(100% - 280px);
+padding:35px;
 }
 
-.header{
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    margin-bottom:30px;
+/* HERO */
+
+.hero{
+background:linear-gradient(135deg,#0ea5e9,#2563eb);
+padding:35px;
+border-radius:24px;
+color:white;
+margin-bottom:30px;
+display:flex;
+justify-content:space-between;
+align-items:center;
+flex-wrap:wrap;
+box-shadow:0 10px 25px rgba(37,99,235,.25);
 }
 
-.header h1{
-    color:#222;
+.hero h1{
+font-size:34px;
+font-weight:700;
 }
 
-.user{
-    color:#666;
-    font-weight:500;
+.hero p{
+margin-top:10px;
+opacity:.95;
 }
 
 .add-btn{
-    background:#8b5e34;
-    color:white;
-    text-decoration:none;
-    padding:12px 22px;
-    border-radius:10px;
-    font-weight:600;
+background:white;
+color:#2563eb;
+padding:14px 24px;
+text-decoration:none;
+border-radius:12px;
+font-weight:600;
+transition:.3s;
 }
 
-/* Cards */
+.add-btn:hover{
+transform:translateY(-3px);
+}
+
+/* CARDS */
 
 .cards{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:20px;
-    margin-bottom:30px;
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:20px;
+margin-bottom:30px;
 }
 
 .card{
-    background:white;
-    padding:25px;
-    border-radius:15px;
-    box-shadow:0 4px 12px rgba(0,0,0,.08);
+background:white;
+padding:25px;
+border-radius:20px;
+box-shadow:0 10px 20px rgba(0,0,0,.05);
+transition:.3s;
 }
 
-.card h3{
-    color:#666;
-    margin-bottom:10px;
+.card:hover{
+transform:translateY(-5px);
 }
 
-.card h2{
-    color:#222;
+.card-title{
+font-size:14px;
+color:#64748b;
+margin-bottom:12px;
 }
 
-/* Table */
+.card-value{
+font-size:30px;
+font-weight:700;
+}
 
-.table-box{
-    background:white;
-    border-radius:15px;
-    overflow:hidden;
-    box-shadow:0 4px 12px rgba(0,0,0,.08);
+.income{
+color:#16a34a;
+}
+
+.expense{
+color:#dc2626;
+}
+
+.balance{
+color:#2563eb;
+}
+
+/* TABLE */
+
+.table-container{
+background:white;
+border-radius:24px;
+overflow:hidden;
+box-shadow:0 10px 20px rgba(0,0,0,.05);
+}
+
+.table-header{
+padding:25px;
+font-size:22px;
+font-weight:600;
+border-bottom:1px solid #e2e8f0;
 }
 
 table{
-    width:100%;
-    border-collapse:collapse;
+width:100%;
+border-collapse:collapse;
 }
 
 th{
-    background:#8b5e34;
-    color:white;
-    padding:16px;
+background:#0f172a;
+color:white;
+padding:18px;
+font-weight:600;
 }
 
 td{
-    padding:15px;
-    text-align:center;
-    border-bottom:1px solid #eee;
+padding:16px;
+text-align:center;
+border-bottom:1px solid #e2e8f0;
 }
 
 tr:hover{
-    background:#fafafa;
+background:#f8fafc;
 }
 
 .edit{
-    text-decoration:none;
-    color:green;
-    font-weight:600;
+padding:8px 14px;
+background:#16a34a;
+color:white;
+border-radius:8px;
+text-decoration:none;
+font-size:14px;
 }
 
 .delete{
-    text-decoration:none;
-    color:red;
-    font-weight:600;
+padding:8px 14px;
+background:#dc2626;
+color:white;
+border-radius:8px;
+text-decoration:none;
+font-size:14px;
+margin-left:8px;
 }
 
 .no-data{
-    padding:30px;
-    text-align:center;
-    color:#666;
+padding:60px;
+text-align:center;
 }
+
+.no-data h2{
+margin-bottom:20px;
+}
+
+.empty-btn{
+display:inline-block;
+padding:14px 22px;
+background:#2563eb;
+color:white;
+text-decoration:none;
+border-radius:12px;
+}
+
+/* MOBILE */
 
 @media(max-width:900px){
 
 .sidebar{
-    display:none;
+display:none;
 }
 
-.cards{
-    grid-template-columns:1fr;
+.main{
+margin-left:0;
+width:100%;
+padding:20px;
 }
 
-.header{
-    flex-direction:column;
-    gap:15px;
+.hero{
+flex-direction:column;
+gap:20px;
+text-align:center;
 }
 
 }
 
 </style>
-
 </head>
+
 <body>
 
 <div class="container">
 
+<!-- SIDEBAR -->
+
 <div class="sidebar">
 
 <div class="logo">
-💰 Expense Tracker
+💰 Expense<span>Pro</span>
 </div>
 
 <div class="menu">
-<a href="/">Dashboard</a>
-<a href="/create">Add Expense</a>
-<a href="/logout">Logout</a>
+<a href="/">🏠 Dashboard</a>
+<a href="/create">➕ Add Expense</a>
+<a href="/logout">🚪 Logout</a>
 </div>
 
 </div>
+
+<!-- MAIN -->
 
 <div class="main">
 
-<div class="header">
+<!-- HERO -->
+
+<div class="hero">
 
 <div>
 
-<h1>Dashboard</h1>
-
-<p class="user">
-
+<h1>
 Welcome
-
 {% if current_user %}
-<b>{{ current_user.name }}</b>
+{{ current_user.name }}
 {% else %}
-<b>User</b>
+User
 {% endif %}
+👋
+</h1>
 
+<p>
+Track expenses, monitor income and stay financially organized.
 </p>
 
 </div>
@@ -233,26 +309,40 @@ Welcome
 
 </div>
 
+<!-- CARDS -->
+
 <div class="cards">
 
 <div class="card">
-<h3>Total Income</h3>
-<h2>₹ {{ income }}</h2>
+<div class="card-title">💵 Total Income</div>
+<div class="card-value income">
+₹ {{ income }}
+</div>
 </div>
 
 <div class="card">
-<h3>Total Expense</h3>
-<h2>₹ {{ expense }}</h2>
+<div class="card-title">📉 Total Expense</div>
+<div class="card-value expense">
+₹ {{ expense }}
+</div>
 </div>
 
 <div class="card">
-<h3>Balance</h3>
-<h2>₹ {{ balance }}</h2>
+<div class="card-title">🏦 Current Balance</div>
+<div class="card-value balance">
+₹ {{ balance }}
+</div>
 </div>
 
 </div>
 
-<div class="table-box">
+<!-- TABLE -->
+
+<div class="table-container">
+
+<div class="table-header">
+Recent Transactions
+</div>
 
 {% if expenses and expenses|length > 0 %}
 
@@ -265,7 +355,7 @@ Welcome
 <th>Amount</th>
 <th>Type</th>
 <th>Date</th>
-<th>Action</th>
+<th>Actions</th>
 </tr>
 
 {% for e in expenses %}
@@ -281,15 +371,11 @@ Welcome
 
 <td>
 
-<a href="/update/{{ e.id }}"
-class="edit">
+<a href="/update/{{ e.id }}" class="edit">
 Edit
 </a>
 
-|
-
-<a href="/delete/{{ e.id }}"
-class="delete">
+<a href="/delete/{{ e.id }}" class="delete">
 Delete
 </a>
 
@@ -305,13 +391,10 @@ Delete
 
 <div class="no-data">
 
-<h2>No Expenses Found</h2>
+<h2>No Expenses Added Yet</h2>
 
-<br>
-
-<a href="/create"
-class="add-btn">
-Add First Expense
+<a href="/create" class="empty-btn">
+Add Your First Expense
 </a>
 
 </div>
@@ -326,3 +409,4 @@ Add First Expense
 
 </body>
 </html>
+
