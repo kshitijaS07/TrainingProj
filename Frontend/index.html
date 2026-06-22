@@ -221,7 +221,12 @@ body {
 }
 .chart-box {
   flex: 1;
-  min-height: 0;
+  min-height: 320px;
+  height: 320px;
+}
+.chart-box canvas {
+  width: 100% !important;
+  height: 100% !important;
 }
 .card-summary {
   background: linear-gradient(180deg, #c7d2fe 0%, #93c5fd 100%);
@@ -346,6 +351,67 @@ body {
   border-radius: 14px;
   color: #fff;
   text-decoration: none;
+}
+.delete-btn {
+  display: inline-block;
+  padding: 8px 12px;
+  border-radius: 12px;
+  background: #fee2e2;
+  color: #b91c1c;
+  text-decoration: none;
+  font-weight: 600;
+}
+.delete-btn:hover {
+  background: #fecaca;
+}
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.65);
+  display: grid;
+  place-items: center;
+  z-index: 99;
+}
+.modal-box {
+  width: min(420px, 90%);
+  background: white;
+  border-radius: 20px;
+  padding: 24px;
+  box-shadow: 0 30px 70px rgba(15, 23, 42, 0.2);
+  text-align: center;
+}
+.modal-box h2 {
+  margin-bottom: 16px;
+  font-size: 20px;
+  color: #0f172a;
+}
+.modal-box p {
+  margin-bottom: 24px;
+  color: #475569;
+  line-height: 1.6;
+}
+.modal-actions {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+.modal-actions button {
+  border: none;
+  border-radius: 14px;
+  padding: 12px 18px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.modal-actions .cancel {
+  background: #e2e8f0;
+  color: #334155;
+}
+.modal-actions .confirm {
+  background: #ef4444;
+  color: white;
+}
+.hidden {
+  display: none !important;
 }
 @media (max-width: 1120px) {
   .dashboard {
@@ -487,6 +553,7 @@ body {
               <th>Date</th>
               <th>Amount</th>
               <th>Status</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
@@ -496,6 +563,9 @@ body {
               <td>{{ e.date }}</td>
               <td>₹ {{ e.amount }}</td>
               <td><span class="badge-pill">{{ 'Deposited' if e.expense_type == 'Income' else 'Expense' }}</span></td>
+              <td>
+                <a href="/delete/{{ e.id }}" class="delete-btn">Delete</a>
+              </td>
             </tr>
             {% endfor %}
           </tbody>
@@ -510,59 +580,145 @@ body {
     </div>
   </main>
 </div>
+<script id="chart-data" type="application/json">
+    {{ chart_data | tojson | safe }}
+</script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 <script>
-const overviewCtx = document.getElementById('overviewChart').getContext('2d');
-new Chart(overviewCtx, {
-  type: 'bar',
-  data: {
-    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug'],
-    datasets: [
-      {
-        label: 'Income',
-        data: [{{ income|default(0) }}, {{ income|default(0) }}, {{ income|default(0) }}, {{ income|default(0) }}, {{ income|default(0) }}, {{ income|default(0) }}, {{ income|default(0) }}, {{ income|default(0) }}],
-        backgroundColor: '#2563eb',
-        borderRadius: 14,
-        barThickness: 18
-      },
-      {
-        label: 'Outcome',
-        data: [{{ expense|default(0) }}, {{ expense|default(0) }}, {{ expense|default(0) }}, {{ expense|default(0) }}, {{ expense|default(0) }}, {{ expense|default(0) }}, {{ expense|default(0) }}, {{ expense|default(0) }}],
-        backgroundColor: '#60a5fa',
-        borderRadius: 14,
-        barThickness: 18
-      }
-    ]
-  },
-  options: {
-    responsive: true,
-    plugins: {
-      legend: { display: false },
-      tooltip: { enabled: true }
-    },
-    scales: {
-      x: { grid: { display: false }, ticks: { color: '#64748b' } },
-      y: { grid: { color: 'rgba(148,163,184,0.16)' }, ticks: { color: '#64748b' } }
+document.addEventListener("DOMContentLoaded", function () {
+
+    // Overview Chart
+    const overviewCanvas = document.getElementById("overviewChart");
+
+    if (overviewCanvas) {
+        const overviewCtx = overviewCanvas.getContext('2d');
+        const chartDataEl = document.getElementById('chart-data');
+        let chartData = {months: [], income: [], expense: []};
+
+        if (chartDataEl) {
+            try {
+                chartData = JSON.parse(chartDataEl.textContent.trim());
+            } catch (error) {
+                console.error('Invalid chart data JSON', error, chartDataEl.textContent);
+            }
+        }
+
+        const chartMonths = chartData.months || [];
+        const chartIncome = (chartData.income || []).map(value => Number(value) || 0);
+        const chartExpense = (chartData.expense || []).map(value => Number(value) || 0);
+
+        console.log('chartMonths', chartMonths, 'chartIncome', chartIncome, 'chartExpense', chartExpense);
+
+        new Chart(overviewCtx, {
+            type: "bar",
+            data: {
+                labels: chartMonths,
+                datasets: [
+                    {
+                        label: "Income",
+                        data: chartIncome,
+                        backgroundColor: "#2563eb",
+                        borderRadius: 14
+                    },
+                    {
+                        label: "Expense",
+                        data: chartExpense,
+                        backgroundColor: "#60a5fa",
+                        borderRadius: 14
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: true
+                    }
+                },
+                scales: {
+                    x: {
+                        stacked: false,
+                        grid: {
+                            display: false
+                        }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        stacked: false
+                    }
+                }
+            }
+        });
     }
-  }
-});
-const activityCtx = document.getElementById('activityChart').getContext('2d');
-new Chart(activityCtx, {
-  type: 'doughnut',
-  data: {
-    labels: ['Regular', 'Shopping', 'Other'],
-    datasets: [{
-      data: [55, 20, 25],
-      backgroundColor: ['#2563eb', '#f97316', '#64748b'],
-      hoverOffset: 4
-    }]
-  },
-  options: {
-    responsive: true,
-    plugins: { legend: { display: false } },
-    cutout: '72%'
-  }
+
+    // Activity Chart
+    const activityCanvas = document.getElementById("activityChart");
+
+    if (activityCanvas) {
+        new Chart(activityCanvas, {
+            type: "doughnut",
+            data: {
+                labels: ["Regular", "Shopping", "Other"],
+                datasets: [{
+                    data: [55, 20, 25],
+                    backgroundColor: [
+                        "#2563eb",
+                        "#f97316",
+                        "#64748b"
+                    ]
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                cutout: "72%",
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                }
+            }
+        });
+    }
+
+    const deleteButtons = document.querySelectorAll('.delete-btn');
+    const modalOverlay = document.getElementById('deleteModalOverlay');
+    const confirmButton = document.getElementById('confirmDeleteButton');
+    const cancelButton = document.getElementById('cancelDeleteButton');
+    let deleteHref = null;
+
+    deleteButtons.forEach(button => {
+        button.addEventListener('click', function (event) {
+            event.preventDefault();
+            deleteHref = button.getAttribute('href');
+            modalOverlay.classList.remove('hidden');
+        });
+    });
+
+    confirmButton.addEventListener('click', function () {
+        if (deleteHref) {
+            window.location.href = deleteHref;
+        }
+    });
+
+    cancelButton.addEventListener('click', function () {
+        deleteHref = null;
+        modalOverlay.classList.add('hidden');
+    });
+
 });
 </script>
+<div id="deleteModalOverlay" class="modal-overlay hidden">
+  <div class="modal-box">
+    <h2>Delete the expense/income?</h2>
+    <p>Are you sure you want to delete this record? This action cannot be undone.</p>
+    <div class="modal-actions">
+      <button type="button" class="cancel" id="cancelDeleteButton">Cancel</button>
+      <button type="button" class="confirm" id="confirmDeleteButton">Delete</button>
+    </div>
+  </div>
+</div>
 </body>
 </html>

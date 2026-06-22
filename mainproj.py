@@ -2,7 +2,7 @@ from fastapi import FastAPI, Request, Form, Depends
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
 
-from sqlalchemy import create_engine, String, Float, select
+from sqlalchemy import create_engine, String, Float, Integer, ForeignKey, select, text, inspect
 from sqlalchemy.orm import (
     DeclarativeBase,
     Mapped,
@@ -13,6 +13,7 @@ from sqlalchemy.orm import (
 
 import jwt
 import bcrypt
+import json
 
 from datetime import datetime, timedelta, timezone
 
@@ -98,8 +99,21 @@ class Expense(Base):
         String(30)
     )
 
+    user_id: Mapped[int] = mapped_column(
+        Integer,
+        ForeignKey("users.id")
+    )
+
 
 Base.metadata.create_all(bind=engine)
+
+# Ensure the expenses table has the user_id column for older databases
+with engine.connect() as conn:
+    inspector = inspect(engine)
+    columns = [c['name'] for c in inspector.get_columns('expenses')]
+    if 'user_id' not in columns:
+        conn.execute(text('ALTER TABLE expenses ADD COLUMN user_id INTEGER'))
+        conn.commit()
 
 # =========================
 # APP
@@ -388,8 +402,10 @@ def home_page(
         )
 
     expenses = db.scalars(
-        select(Expense)
-    ).all()
+    select(Expense).where(
+        Expense.user_id == current_user.id
+    )
+).all()
 
     income = sum(
         e.amount
@@ -408,6 +424,34 @@ def home_page(
     income_ratio = int((income / total) * 100) if total else 0
     expense_ratio = int((expense / total) * 100) if total else 0
 
+    # Monthly breakdown for chart
+    months = [
+        "Jan", "Feb", "Mar", "Apr",
+        "May", "Jun", "Jul", "Aug",
+        "Sep", "Oct", "Nov", "Dec"
+    ]
+
+    monthly_income = [0] * 12
+    monthly_expense = [0] * 12
+
+    for e in expenses:
+        try:
+            month_index = datetime.fromisoformat(e.date).month - 1
+        except Exception:
+            month_index = None
+
+        if month_index is not None and 0 <= month_index < 12:
+            if e.expense_type == "Income":
+                monthly_income[month_index] += e.amount
+            elif e.expense_type == "Expense":
+                monthly_expense[month_index] += e.amount
+
+    chart_data = {
+        "months": months,
+        "income": monthly_income,
+        "expense": monthly_expense
+    }
+
     return templates.TemplateResponse(
         request=request,
         name="index.html",
@@ -418,7 +462,8 @@ def home_page(
             "expense": expense,
             "balance": balance,
             "income_ratio": income_ratio,
-            "expense_ratio": expense_ratio
+            "expense_ratio": expense_ratio,
+            "chart_data": chart_data
         }
     )
 
@@ -436,7 +481,7 @@ def create_page(
     current_user: User = Depends(get_current_user)
 ):
 
-    if not current_user:
+    if current_user is None:
         return RedirectResponse(
             url="/login",
             status_code=303
@@ -444,7 +489,10 @@ def create_page(
 
     return templates.TemplateResponse(
         request=request,
-        name="create.html"
+        name="create.html",
+        context={
+            "current_user": current_user
+        }
     )
 
 
@@ -461,28 +509,35 @@ def create_expense(
     note: str = Form(""),
     date: str = Form(...),
     db: Session = Depends(get_db),
-    current_user:
-    User = Depends(get_current_user)
+    current_user: User = Depends(get_current_user)
 ):
 
-    if not current_user:
-
+    if current_user is None:
         return RedirectResponse(
             url="/login",
             status_code=303
         )
 
-    expense = Expense(
-        title=title,
-        category=category,
-        amount=amount,
-        expense_type=expense_type,
-        note=note,
-        date=date
-    )
+    try:
+        expense = Expense(
+            title=title,
+            category=category,
+            amount=amount,
+            expense_type=expense_type,
+            note=note,
+            date=date,
+            user_id=current_user.id
+        )
 
-    db.add(expense)
-    db.commit()
+        db.add(expense)
+        db.commit()
+        db.refresh(expense)
+
+        print(f"Expense Saved: {title} - ₹{amount}")
+
+    except Exception as e:
+        db.rollback()
+        print("DATABASE ERROR:", e)
 
     return RedirectResponse(
         url="/",
@@ -575,17 +630,21 @@ def update_expense(
 def delete_expense(
     expense_id: int,
     db: Session = Depends(get_db),
-    current_user:
-    User = Depends(get_current_user)
+    current_user: User = Depends(get_current_user)
 ):
+
+    if current_user is None:
+        return RedirectResponse(
+            url="/login",
+            status_code=303
+        )
 
     expense = db.get(
         Expense,
         expense_id
     )
 
-    if expense:
-
+    if expense and expense.user_id == current_user.id:
         db.delete(expense)
         db.commit()
 
